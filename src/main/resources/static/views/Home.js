@@ -5,29 +5,25 @@ export default function Home(props) {
     const loggedIn = isLoggedIn();
     if (loggedIn) {
         return `
-        <header>
+            <div class="row set-up-row">
+            <div class="card set-up-card"> 
             <h3>Welcome ${getUser()}!</h3>
-        </header>
-        <main>
-            <div>
                 <p class="tagline">
                     Tell us what you know. If it is on the internet, it must be true. If others want to be right too, they should make sure they agree with you on all things.
                 </p>    
-            </div>
-        </main>
+                    </div>
+            </div> 
     `;
     } else {
         return `
-        <header>
+        <div class="row set-up-row">
+            <div class="card set-up-card"> 
             <h3>Welcome!</h3>
-        </header>
-        <main>
-            <div>
                 <p class="tagline">
                     You may lurk all you want, but only registered users can post.
                 </p>    
             </div>
-        </main>
+        </div>
     `;
     }
 

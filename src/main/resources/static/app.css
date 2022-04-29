@@ -6,6 +6,17 @@ h1, h2, h3, h4, p, label, h6 {
     color: #5d5c5c;
 }
 
+#new-post {
+    padding-right: 0;
+}
+
+.row {
+    margin-left: 5rem;
+    margin-right: 5rem;
+}
+.row>* {
+    padding-left: 0;
+}
 .readcomments, .comment, .delete-comment-button {
     color: #777676 !important;
 }
@@ -25,7 +36,9 @@ h1, h2, h3, h4, p, label, h6 {
     width: 95%;
     margin-left: 16px;
 }
-
+.edit {
+    margin-top: 5px;
+}
 
 .btn, #login-btn, #register-btn, #submit-edit-btn {
     width: 5rem;
@@ -35,9 +48,9 @@ h1, h2, h3, h4, p, label, h6 {
 }
 
 .navbar {
-    background-color: #673667 !important;
+    background-color: #8c488c !important;
 }
-.navbar-brand {
+.navbar-brand, #login-form, #register-form, #profile-form {
     padding-left: 16px;
 }
 
@@ -47,8 +60,21 @@ a {
 .card {
     border: none;
     border-radius: 5px;
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
+.set-up-card {
+    width: 40rem;
+    align-items: center;
+    justify-content: center;
+    height: 20rem;
+    margin-top: 10rem;
+}
+.set-up-row{
+    align-items: center;
+    justify-content: center;
+}
+
 .card-footer, .card-header {
     border: none;
     text-align: right;
@@ -83,6 +109,10 @@ a {
     margin-bottom: 16px;
 }
 
+#login-form>input, #register-form>input {
+    background-color: #dedbdb;
+}
+
 #login-form>input, #register-form>input, #profile-form>input{
     border: none!important;
     border-radius: 5px;
@@ -93,8 +123,8 @@ h3 {
     margin-left: 1rem;
 }
 
-form, .tagline {
-    margin-left: 1rem;
+.tagline {
+    margin-left: 2rem;
 }
 
 h4 {
@@ -108,7 +138,7 @@ h4 {
     color: white;
     padding-left: 10px;
     padding-right: 10px;
-    margin-top: 10px;
+    margin-top: 16px;
     margin-right: 5px;
 }
 #add-new-button {
@@ -122,8 +152,17 @@ h4 {
 #register-form > label:nth-child(4), #register-form > label:nth-child(1), #register-form > label:nth-child(7) {
     width: 5rem;
 }
+
+#login-form > label {
+    width: 4.6rem;
+}
 #register-btn {
-    margin-left: 15.2rem;
+    margin-left: 15.25rem;
+    border-radius: 5px;
+}
+#login-btn {
+    margin-left: 14.85rem;
+    border-radius: 5px;
 }
 
 #register-response, #login-response {

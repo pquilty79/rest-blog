@@ -13,7 +13,7 @@ export default function User(props) {
                 <title>Edit User</title>
             </head>
             <body>
-                <h3>Edit Profile</h3>
+                <h3>Change Password</h3>
 
                 <form id="profile-form">
                     <p>Username: ${props.users.username}</p>
@@ -27,9 +27,9 @@ export default function User(props) {
                 </form>
             <div id="posts-container" class= "container-fluid mt-5">
                 <div class="row">
-                    <div class="col-sm-12 col-lg-6">
+                    <div class="col">
                         <h4>Post History</h4>
-             ${props.users.posts.reverse().map(post => `<div class="card" style="width: 40rem;">
+             ${props.users.posts.reverse().map(post => `<div class="card">
                  <div class="card-body">
                  <div class="card-header text-muted"><p id="date">posted: ${post.date} by ${props.users.username}</p></div>
                  <h4 id="initial-title-${post.id}" class="posttitle">${post.title}</h4><input class="edit" id="edit-title-${post.id}" style="display:none;"  value=${post.title}>
@@ -76,7 +76,7 @@ function updatePasswordListener() {
                 method: "PUT",
                 headers: getHeaders(),
             }
-            let uriExtra ='/updatePassword?newPassword='+ newPassword;
+            let uriExtra = '/updatePassword?newPassword=' + newPassword;
             fetch(URI + uriExtra, request)
                 .then(res => {
                     console.log(res.status);
@@ -89,7 +89,6 @@ function updatePasswordListener() {
         }
     })
 }
-
 
 
 function deletePostListener() {
@@ -126,6 +125,7 @@ function cancelListener() {
         $("#cancel-button-" + id).css({display: "none"});
     })
 }
+
 function editPostListener() {
     $(".edit-post-button").click(function (e) {
         const id = e.target.getAttribute("data-id")
@@ -141,36 +141,37 @@ function editPostListener() {
         $("#cancel-button-" + id).css({display: "inline-block"});
     })
 }
-    function updatePostListener() {
-        $(".submit-post-button ").click(function (e) {
-            const id = e.target.getAttribute("data-id")
-            console.log(id)
-            const title = $("#edit-title-" + id).val();
-            const content = $("#edit-content-" + id).val();
-            let categoriesList = $("#edit-category-" +id).val();
-            let breakCats = (categoriesList.split(','));
-            let categories = [];
-            for (let category of breakCats) {
-                category = {"name": category}
-                categories.push(category)
-            }
-            const editedPost = {title, content, categories}
-            console.log(editedPost)
-            const request = {
-                method: "PUT",
-                headers: getHeaders(),
-                body: JSON.stringify(editedPost)
-            }
-            fetch("http://localhost:8081/api/posts/" + id, request)
-                .then(res => {
-                    console.log(res.status);
-                }).catch(error => {
-                console.log(error);
-            }).finally(() => {
-                createView("/users")
-            });
-        })
-    }
+
+function updatePostListener() {
+    $(".submit-post-button ").click(function (e) {
+        const id = e.target.getAttribute("data-id")
+        console.log(id)
+        const title = $("#edit-title-" + id).val();
+        const content = $("#edit-content-" + id).val();
+        let categoriesList = $("#edit-category-" + id).val();
+        let breakCats = (categoriesList.split(','));
+        let categories = [];
+        for (let category of breakCats) {
+            category = {"name": category}
+            categories.push(category)
+        }
+        const editedPost = {title, content, categories}
+        console.log(editedPost)
+        const request = {
+            method: "PUT",
+            headers: getHeaders(),
+            body: JSON.stringify(editedPost)
+        }
+        fetch("http://localhost:8081/api/posts/" + id, request)
+            .then(res => {
+                console.log(res.status);
+            }).catch(error => {
+            console.log(error);
+        }).finally(() => {
+            createView("/users")
+        });
+    })
+}
 
 
 

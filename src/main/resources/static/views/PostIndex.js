@@ -11,10 +11,9 @@ export default function PostIndex(props) {
         <main>
             <div id="posts-container" class= "container-fluid mt-5">
                 <div class="row">
-                    <div class="col-sm-12 col-lg-9">
                         <input type="submit" class="btn btn-primary" id="add-new-button" ${checkIfUser()}value="+ Post">
                         <br>
-                        <div id="new-post" style="display: none;" class="col-sm-12 col-lg-9">
+                        <div id="new-post" style="display: none;">
                             <form id="add-post-form">
                                 <h4>Add a Post:</h4>
                                 <div class="form-group">
@@ -29,11 +28,9 @@ export default function PostIndex(props) {
                     <input type="submit" class="btn btn-primary" id="add-post-button" value="Submit">
                 </div>
                 </form>
-            </div>
-            </div>
-            </div>
+            </div>         
                         <h4>Posts</h4>
-                ${props.posts.reverse().map(post => `<div class="card" style="width: 40rem;">
+                ${props.posts.reverse().map(post => `<div class="card">
                  <div class="card-body">
                  <div class="card-header text-muted"><p id="date">posted: ${post.date} by ${post.author.username}</p></div>
                  <h4 id="initial-title-${post.id}" class="posttitle">${post.title}</h4><input class="edit" id="edit-title-${post.id}" style="display:none;"  value=${post.title}>
@@ -64,6 +61,7 @@ export default function PostIndex(props) {
                 <br>`).join('')}
                 </div></div>
          `).join('')}
+                    </div>
                     </div>
         </main>
     `;

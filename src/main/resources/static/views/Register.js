@@ -11,8 +11,9 @@ export default function Register(props) {
                 <title>Register</title>
             </head>
             <body>
+            <div class="row set-up-row">
+            <div class="card set-up-card"> 
                 <h3>Register</h3>
-        
                 <form id="register-form">
                     <label for="username">Username:</label>
                     <input id="username" name="username" type="text"/>
@@ -27,6 +28,8 @@ export default function Register(props) {
                     <br>
                     <p id="register-response">Registration failed. Please try again.</p>
                 </form>
+                </div>
+                </div>
             </body>
         </html>
 `;
