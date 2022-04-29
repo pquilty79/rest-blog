@@ -30,37 +30,7 @@ export default function PostIndex(props) {
                 </form>
             </div>         
                         <h4>Posts</h4>
-                ${props.posts.reverse().map(post => `<div class="card">
-                 <div class="card-body">
-                 <div class="card-header text-muted"><p id="date">posted: ${post.date} by ${post.author.username}</p></div>
-                 <h4 id="initial-title-${post.id}" class="posttitle">${post.title}</h4><input class="edit" id="edit-title-${post.id}" style="display:none;"  value=${post.title}>
-                 <br id="br-${post.id}" style="display:none;">
-                 <p id="initial-post-${post.id}">${post.content}</p>
-                 <textarea class="form-control" id="edit-content-${post.id}" rows="8" style="display:none;">${post.content}</textarea>
-
-          </div>
-             <div class="card-footer text-muted">
-             <input type="text" id="edit-category-${post.id}" style="display:none;" class="form-control" value=${post.categories[0].name} name="postCategory">
-             ${post.categories.map(category => `<p class="post-categories">#${category.name}</p>`).join('')}
-             <input id="initial-button-${post.id}"type="submit" class="btn btn-primary edit-post-button" data-id="${post.id}" ${checkUser(post.author.email)} value="Edit">
-             <input type="submit" id="edit-button-${post.id}" class="btn btn-primary submit-post-button edit" style="display:none;" data-id="${post.id}" value="Submit">
-                <input type="submit" id="delete-button-${post.id}" class="btn btn-primary delete-post-button" data-id="${post.id}"  ${checkUser(post.author.email)} value="Delete">
-                <input type="submit" id="cancel-button-${post.id}" class="btn btn-primary edit cancel-button" style="display:none;" data-id="${post.id}" value="Cancel">
-               <br>
-               
-                <a href="#" class="readcomments" data-id="${post.id}">comments</a>
-</div>
-                <div class="comments" id="comments-${post.id}" style="display:none;">
-                <a href="#" class="comment" data-id="${post.id}" ${checkIfUser()}>leave comment</a>
-                <textarea class="form-control commentbox" id="add-comment-${post.id}" rows="2" style="display:none;" placeholder="Enter comments:"></textarea>
-                <input type="submit" id="comment-button-${post.id}" class="btn btn-primary submit-comment-button" style="display:none;" data-id="${post.id}" value="Submit">
-                <h6 id="commentsheader">Comments:</h6>
-                ${post.comments.map(comment => `<p>posted: ${comment.date} by ${comment.author.username}:</p>
-                <p>${comment.comment}</p>
-                <a href="#" id="delete-comment-${comment.id}" class="delete-comment-button" data-id="${comment.id}"  ${checkUser(comment.author.email)}>delete</a>
-                <br>`).join('')}
-                </div></div>
-         `).join('')}
+                        <div id="posts-display">${displayPosts(props.posts)}</div>
                     </div>
                     </div>
         </main>
@@ -83,9 +53,55 @@ export function PostEvents() {
 }
 
 function searchBoxListener() {
-    $("#nosubmit").keyup(function(){
-        return $("#nosubmit").val()
+    $("#nosubmit").on('keypress',function(e){
+        if(e.which === 13) {
+            let searchedCat = $("#nosubmit").val()
+            $("#nosubmit").innerHTML = ""
+            const request = {
+                method: 'GET',
+                headers: getHeaders()
+            };
+            fetch(URI + `/searchByCategory?category=${searchedCat}`, request)
+                .then(results => results.json())
+                .then(posts => {
+                    $("#posts-display").html(`${displayPosts(posts)}`)
+                })
+
+        }
     })
+}
+
+function displayPosts(posts) {
+    return posts.reverse().map(post => `<div class="card">
+                 <div class="card-body">
+                 <div class="card-header text-muted"><p id="date">posted: ${post.date} by ${post.author.username}</p></div>
+                 <h4 id="initial-title-${post.id}" class="posttitle">${post.title}</h4><input class="edit" id="edit-title-${post.id}" style="display:none;"  value=${post.title}>
+                 <br id="br-${post.id}" style="display:none;">
+                 <p id="initial-post-${post.id}">${post.content}</p>
+                 <textarea class="form-control" id="edit-content-${post.id}" rows="8" style="display:none;">${post.content}</textarea>
+          </div>
+             <div class="card-footer text-muted">
+             <input type="text" id="edit-category-${post.id}" style="display:none;" class="form-control" value=${post.categories[0].name} name="postCategory">
+             ${post.categories.map(category => `<p class="post-categories">#${category.name}</p>`).join('')}
+             <input id="initial-button-${post.id}"type="submit" class="btn btn-primary edit-post-button" data-id="${post.id}" ${checkUser(post.author.email)} value="Edit">
+             <input type="submit" id="edit-button-${post.id}" class="btn btn-primary submit-post-button edit" style="display:none;" data-id="${post.id}" value="Submit">
+                <input type="submit" id="delete-button-${post.id}" class="btn btn-primary delete-post-button" data-id="${post.id}"  ${checkUser(post.author.email)} value="Delete">
+                <input type="submit" id="cancel-button-${post.id}" class="btn btn-primary edit cancel-button" style="display:none;" data-id="${post.id}" value="Cancel">
+               <br>
+               
+                <a href="#" class="readcomments" data-id="${post.id}">comments</a>
+</div>
+                <div class="comments" id="comments-${post.id}" style="display:none;">
+                <a href="#" class="comment" data-id="${post.id}" ${checkIfUser()}>leave comment</a>
+                <textarea class="form-control commentbox" id="add-comment-${post.id}" rows="2" style="display:none;" placeholder="Enter comments:"></textarea>
+                <input type="submit" id="comment-button-${post.id}" class="btn btn-primary submit-comment-button" style="display:none;" data-id="${post.id}" value="Submit">
+                <h6 id="commentsheader">Comments:</h6>
+                ${post.comments.map(comment => `<p>posted: ${comment.date} by ${comment.author.username}:</p>
+                <p>${comment.comment}</p>
+                <a href="#" id="delete-comment-${comment.id}" class="delete-comment-button" data-id="${comment.id}"  ${checkUser(comment.author.email)}>delete</a>
+                <br>`).join('')}
+                </div></div>
+         `).join('')
 }
 
 
