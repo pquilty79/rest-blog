@@ -56,17 +56,20 @@ function searchBoxListener() {
     $("#nosubmit").on('keypress',function(e){
         if(e.which === 13) {
             let searchedCat = $("#nosubmit").val()
-            $("#nosubmit").innerHTML = ""
-            const request = {
-                method: 'GET',
-                headers: getHeaders()
-            };
-            fetch(URI + `/searchByCategory?category=${searchedCat}`, request)
-                .then(results => results.json())
-                .then(posts => {
-                    $("#posts-display").html(`${displayPosts(posts)}`)
-                })
-
+                $("#nosubmit").val("")
+                const request = {
+                    method: 'GET',
+                    headers: getHeaders()
+                };
+            if (searchedCat !== "") {
+                fetch(URI + `/searchByCategory?category=${searchedCat}`, request)
+                    .then(results => results.json())
+                    .then(posts => {
+                        $("#posts-display").html(`${displayPosts(posts)}`)
+                    })
+            } else {
+                createView("/posts")
+            }
         }
     })
 }
