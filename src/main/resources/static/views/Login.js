@@ -1,0 +1,27 @@
+
+
+
+export default function Login(props) {
+    return `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Log In</title>
+</head>
+<body>
+<h3>Log In</h3>
+
+<form id="login-form">
+    <label for="username">Enter Email:</label>
+    <input id="username" name="username" type="text"/>
+    <label for="password">Password:</label>
+    <input id="password" name="password" type="password"/>
+    <input id="login-btn" type="submit" value="Log In"/>
+    <br>
+    <p id="login-response">Login failed. Please try again.</p>
+</form>
+</body>
+</html>`;
+
+}
+
