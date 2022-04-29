@@ -6,12 +6,12 @@ const URI = "http://localhost:8081/api/posts"
 
 
 export default function PostIndex(props) {
-    console.log(props)
     return `
         <main>
             <div id="posts-container" class= "container-fluid mt-5">
                 <div class="row">
                         <input type="submit" class="btn btn-primary" id="add-new-button" ${checkIfUser()}value="+ Post">
+                        <input id="nosubmit" type="search" placeholder="Search categories...">
                         <br>
                         <div id="new-post" style="display: none;">
                             <form id="add-post-form">
@@ -79,6 +79,13 @@ export function PostEvents() {
     leaveCommentsListener();
     submitCommentsListener();
     deleteCommentsListener();
+    searchBoxListener();
+}
+
+function searchBoxListener() {
+    $("#nosubmit").keyup(function(){
+        return $("#nosubmit").val()
+    })
 }
 
 

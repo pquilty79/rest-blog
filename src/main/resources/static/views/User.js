@@ -13,9 +13,8 @@ export default function User(props) {
                 <title>Edit User</title>
             </head>
             <body>
-                <h3>Change Password</h3>
-
                 <form id="profile-form">
+                    <h3>Change Password</h3>
                     <p>Username: ${props.users.username}</p>
                     <p>Email: ${props.users.email}</p>
                     <label for="new-password">Enter New Password</label>

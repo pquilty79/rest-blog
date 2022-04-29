@@ -50,8 +50,24 @@ h1, h2, h3, h4, p, label, h6 {
 .navbar {
     background-color: #8c488c !important;
 }
-.navbar-brand, #login-form, #register-form, #profile-form {
+#login-form, #register-form, #profile-form {
     padding-left: 16px;
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
+.navbar-brand {
+    padding-left: 16px;
+}
+
+#profile-form {
+    margin-top: 2rem;
+}
+#submit-edit-btn {
+    border-radius: 5px;
+    margin-left: 5px;
+}
+#profile-form > label:nth-child(6) {
+    margin-left: 5px;
 }
 
 a {
@@ -118,9 +134,7 @@ a {
     border-radius: 5px;
 }
 h3 {
-    margin-top: 2rem;
     margin-bottom: 1rem;
-    margin-left: 1rem;
 }
 
 .tagline {
@@ -183,4 +197,16 @@ h4 {
 .comments > h6 {
     margin-top: 32px;
     margin-left: 16px;
+}
+
+
+#nosubmit {
+    width: 20%;
+    padding: 9px 4px 9px 20px;
+    border: none;
+    font-size: 14px;
+    border-radius: 5px;
+    background: white;
+    position: absolute;
+    right: 5.8rem;
 }
