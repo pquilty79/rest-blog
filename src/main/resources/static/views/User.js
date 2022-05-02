@@ -14,11 +14,12 @@ export default function User(props) {
             </head>
             <body>
                 <form id="profile-form">
-                    <h3>Change Password</h3>
+                    <h3>Profile</h3>
                     <p>Username: ${props.users.username}</p>
                     <p>Email: ${props.users.email}</p>
                     <p>Account Level: ${props.users.role} &nbsp&nbsp&nbsp&nbsp&nbspMember Since: ${props.users.createdAt}</p>
                     <p>Total Posts: ${props.users.posts.length} &nbsp&nbsp&nbsp&nbsp&nbspTotal Comments: ${props.users.comments.length}</p>
+                    <h6>Change Password:</h6>
                     <label for="new-password">Enter New Password:</label>
                     <input id="new-password" name="newpassword" type="password"/>
                     <label for="confirm-password">Confirm Password:</label>
