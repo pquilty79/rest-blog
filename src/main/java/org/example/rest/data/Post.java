@@ -46,7 +46,9 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @JsonIgnoreProperties({"post"})
     private Collection<Comments> comments;
-
+    @OneToOne
+    @JsonIgnoreProperties({"post"})
+    private FileDB files;
 
 
     public User getAuthor() {
@@ -97,12 +99,21 @@ public class Post {
         this.content = content;
     }
 
-    public Post(String title, String content, String date, User author, Collection<Category> categories) {
+    public FileDB getFiles() {
+        return files;
+    }
+
+    public void setFiles(FileDB files) {
+        this.files = files;
+    }
+
+    public Post(String title, String content, String date, User author, Collection<Category> categories, FileDB file) {
         this.title = title;
         this.content = content;
         this.date = date;
         this.author = author;
         this.categories = categories;
+        this.files = file;
     }
 
     public Post() {

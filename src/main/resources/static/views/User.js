@@ -17,9 +17,11 @@ export default function User(props) {
                     <h3>Change Password</h3>
                     <p>Username: ${props.users.username}</p>
                     <p>Email: ${props.users.email}</p>
-                    <label for="new-password">Enter New Password</label>
+                    <p>Account Level: ${props.users.role} &nbsp&nbsp&nbsp&nbsp&nbspMember Since: ${props.users.createdAt}</p>
+                    <p>Total Posts: ${props.users.posts.length} &nbsp&nbsp&nbsp&nbsp&nbspTotal Comments: ${props.users.comments.length}</p>
+                    <label for="new-password">Enter New Password:</label>
                     <input id="new-password" name="newpassword" type="password"/>
-                    <label for="confirm-password">Confirm Password</label>
+                    <label for="confirm-password">Confirm Password:</label>
                     <input id="confirm-password" name="confirmpassword" type="password"/>
                     <button id="submit-edit-btn" type="button">Submit</button>
                     <p id="password-message"></p>

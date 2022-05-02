@@ -6,10 +6,6 @@ h1, h2, h3, h4, p, label, h6 {
     color: #5d5c5c;
 }
 
-#new-post {
-    padding-right: 0;
-}
-
 .row {
     margin-left: 5rem;
     margin-right: 5rem;
@@ -210,3 +206,4 @@ h4 {
     position: absolute;
     right: 6.5rem;
 }
+

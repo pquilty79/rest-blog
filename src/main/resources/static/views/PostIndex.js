@@ -14,7 +14,7 @@ export default function PostIndex(props) {
                         <input id="nosubmit" type="search" placeholder="Search categories...">
                         <br>
                         <div id="new-post" style="display: none;">
-                            <form id="add-post-form">
+                            <form id="add-post-form" >
                                 <h4>Add a Post:</h4>
                                 <div class="form-group">
                                 <input type="text" id="add-post-title" class="form-control" placeholder="Enter title" name="postTitle">
@@ -24,6 +24,13 @@ export default function PostIndex(props) {
                     </div>
                     <div "class="form-group">
                     <textarea class="form-control" id="add-post-content" rows="8" placeholder="Enter post here..."></textarea>
+                    <form id="uploadform" enctype="multipart/form-data">
+
+                    <table>
+<tr><td>File to upload:</td><td><input type="file" name="file" id="add-file"/></td></tr>
+<tr><td></td><td><input type="submit" value="Upload" id="uploadFile" class="btn"/></td></tr>
+</table>
+</form>
                     <input type="submit" id="cancel-button" class="btn btn-primary cancel-button" value="Cancel">
                     <input type="submit" class="btn btn-primary" id="add-post-button" value="Submit">
                 </div>
@@ -37,42 +44,6 @@ export default function PostIndex(props) {
     `;
 }
 
-export function PostEvents() {
-    createAddPostListener();
-    editPostListener();
-    deletePostListener();
-    updatePostListener();
-    cancelListener();
-    addListener();
-    cancelAddListener();
-    viewCommentsListener();
-    leaveCommentsListener();
-    submitCommentsListener();
-    deleteCommentsListener();
-    searchBoxListener();
-}
-
-function searchBoxListener() {
-    $("#nosubmit").on('keypress',function(e){
-        if(e.which === 13) {
-            let searchedCat = $("#nosubmit").val()
-                $("#nosubmit").val("")
-                const request = {
-                    method: 'GET',
-                    headers: getHeaders()
-                };
-            if (searchedCat !== "") {
-                fetch(URI + `/searchByCategory?category=${searchedCat}`, request)
-                    .then(results => results.json())
-                    .then(posts => {
-                        $("#posts-display").html(`${displayPosts(posts)}`)
-                    })
-            } else {
-                createView("/posts")
-            }
-        }
-    })
-}
 
 function displayPosts(posts) {
     return posts.reverse().map(post => `<div class="card">
@@ -105,6 +76,47 @@ function displayPosts(posts) {
                 <br>`).join('')}
                 </div></div>
          `).join('')
+}
+
+export function PostEvents() {
+    createAddPostListener();
+    editPostListener();
+    deletePostListener();
+    updatePostListener();
+    cancelListener();
+    addListener();
+    cancelAddListener();
+    viewCommentsListener();
+    leaveCommentsListener();
+    submitCommentsListener();
+    deleteCommentsListener();
+    searchBoxListener();
+    saveFileListener()
+}
+
+
+
+
+function searchBoxListener() {
+    $("#nosubmit").on('keypress',function(e){
+        if(e.which === 13) {
+            let searchedCat = $("#nosubmit").val()
+                $("#nosubmit").val("")
+                const request = {
+                    method: 'GET',
+                    headers: getHeaders()
+                };
+            if (searchedCat !== "") {
+                fetch(URI + `/searchByCategory?category=${searchedCat}`, request)
+                    .then(results => results.json())
+                    .then(posts => {
+                        $("#posts-display").html(`${displayPosts(posts)}`)
+                    })
+            } else {
+                createView("/posts")
+            }
+        }
+    })
 }
 
 
@@ -184,7 +196,8 @@ function submitCommentsListener() {
                 console.log(res.status);
             }).catch(error => {
             console.log(error);
-        }).finally(() => {
+        })
+            .finally(() => {
             createView("/posts")
         });
     })
@@ -224,6 +237,39 @@ function cancelAddListener() {
         $("#add-new-button").toggle().css({display: "inline-block"});
     })
 }
+
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+
+function saveFileListener() {
+    $("#uploadFile").click(function () {
+    let file = getBase64($("#add-file").prop('files')[0])
+    const token = localStorage.getItem("access_token");
+    let saveURI = "http://localhost:8081/upload?file=" + file
+    let request = {
+        method: "POST",
+        headers: {
+            'Authorization': 'Bearer ' + `${token}`
+        }
+    }
+    fetch(saveURI, request)
+        .then(res => {
+            console.log(res.status);
+        }).catch(error => {
+        console.log(error);
+    })
+    })
+    }
+
+
+
 
 
 

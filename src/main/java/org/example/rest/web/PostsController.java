@@ -4,10 +4,16 @@ package org.example.rest.web;
 import lombok.AllArgsConstructor;
 import org.example.rest.data.*;
 import org.example.rest.services.EmailService;
+import org.example.rest.services.FileStorageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.*;
 
 import static org.example.rest.data.User.Role.ADMIN;
@@ -24,6 +30,9 @@ public class PostsController {
     private final EmailService emailService;
     private final UsersRepository userRepository;
     private final CommentsRepository commentsRepository;
+    @Autowired
+    private FileStorageService storageService;
+
 
     @GetMapping
     public Collection<Post> getPosts() {
@@ -37,10 +46,11 @@ public class PostsController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('USER') || hasAuthority('ADMIN')")
-    public void createPost(@RequestBody Post post, OAuth2Authentication auth) {
+    public void createPost(@RequestBody Post post, OAuth2Authentication auth) throws IOException {
         String email = auth.getName();
         User user = userRepository.findByEmail(email);
         post.setAuthor(user);
+//        post.setFiles(storageService.convert(file));
         Collection<Category> categories = new ArrayList<>();
         for(Category category: post.getCategories()) {
             if(categoryRepository.findCategoryByName(category.getName()) !=null){
